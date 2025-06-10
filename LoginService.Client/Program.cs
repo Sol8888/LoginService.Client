@@ -1,6 +1,11 @@
 using LoginService.Client.Components;
+using LoginService.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<AuthService>();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
