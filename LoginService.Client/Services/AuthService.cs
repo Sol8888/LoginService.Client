@@ -15,7 +15,7 @@ namespace LoginService.Client.Services
 
         public async Task<string> LoginAsync(LoginRequest request)
         {
-            var response = await _httpClient.PostAsJsonAsync("http://localhost:5229/api/Auth/login", request);
+            var response = await _httpClient.PostAsJsonAsync("/api/Auth/login", request);
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<LoginResult>();

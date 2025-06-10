@@ -3,26 +3,27 @@ using LoginService.Client.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient();
-builder.Services.AddScoped<AuthService>();
+// Configurar AuthService con HttpClient y base URL desde configuración
+builder.Services.AddHttpClient<AuthService>(client =>
+{
+    var apiBaseUrl = builder.Configuration["ApiBaseUrl"];
+    client.BaseAddress = new Uri(apiBaseUrl!);
+});
 
-
-// Add services to the container.
+// Agregar servicios de Blazor
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 app.UseAntiforgery();
 
