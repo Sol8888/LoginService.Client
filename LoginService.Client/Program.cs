@@ -4,11 +4,18 @@ using LoginService.Client.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configurar AuthService con HttpClient y base URL desde configuración
+// Configurar AuthService con HttpClient y base URL desde configuración
 builder.Services.AddHttpClient<AuthService>(client =>
 {
     var apiBaseUrl = builder.Configuration["ApiBaseUrl"];
+
+    // Aquí agregas el log para ver la URL que realmente se está usando
+    Console.WriteLine($"[Blazor] Usando API en: {apiBaseUrl}");
+
     client.BaseAddress = new Uri(apiBaseUrl!);
 });
+
+
 
 // Agregar servicios de Blazor
 builder.Services.AddRazorComponents()

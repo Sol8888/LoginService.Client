@@ -2,6 +2,8 @@
 @using LoginService.Client.Services
 @using LoginService.Client.Models
 @inject AuthService AuthService
+@rendermode InteractiveServer
+@inject NavigationManager Navigation
 
 <h3>Login</h3>
 <EditForm Model="loginModel" OnValidSubmit="HandleLogin" FormName="loginForm">
@@ -32,6 +34,13 @@
 
     private async Task HandleLogin()
     {
+        Console.WriteLine($"[Blazor] Enviando: '{loginModel.Username}' / '{loginModel.Password}'");
         message = await AuthService.LoginAsync(loginModel);
+        if (!message.Contains("inválidas", StringComparison.OrdinalIgnoreCase))
+        {
+            Navigation.NavigateTo("/pandas");
+        }
     }
+
+
 }
